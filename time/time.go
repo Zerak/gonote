@@ -11,9 +11,29 @@ func main() {
 	//<-time.After(time.Second * 2)
 	//fmt.Println("after time...")
 
+	// 5天前的时间
+	t5t := time.Now().Add(-time.Duration(time.Hour * 24 * time.Duration(5)))
+	fmt.Println("5 day ago:",t5t)
+	fmt.Println("5 day ago timestamp:",t5t.Unix())
+
 	// 取当天零点
-	fmt.Printf("getDayTodayZero:%v\n",getDayTodayZero(time.Now().Unix()))
-	fmt.Printf("getDayYesterdayZero:%v\n",getDayYesterdayZero(time.Now().Unix()))
+	dz := getDayTodayZero(time.Now().Unix())
+	dzdate := timestampToDate(dz)
+	fmt.Printf("date:%v getDayTodayZero:%v\n", dzdate, dz)
+
+	dm := getDayYesterdayMidnight(time.Now().Unix())
+	dmdate := timestampToDate(dm)
+	fmt.Printf("date:%v getDayYesterdayMidnight:%v\n", dmdate, dm)
+
+	dtm := getDayTodayMidnight(time.Now().Unix())
+	dtmdate := timestampToDate(dtm)
+	fmt.Printf("date:%v getDayTodayMidnight:%v\n", dtmdate, dtm)
+
+	now := time.Now().Add(-time.Hour * 24 * 1)
+	da := getDayYesterdayMidnight(now.Unix())
+	fmt.Printf("getDayYesterdayMidnight :%v\n", da)
+	dat := timestampToDate(da)
+	fmt.Printf("date:%v\n", dat)
 
 	timestampToDate(time.Now().Unix())
 
@@ -62,9 +82,9 @@ func startTimer(f func()) {
 
 func timestampToDate(stamp int64) (date string) {
 	tm := time.Unix(stamp, 0)
-	str := tm.Format("20060102")
+	date = tm.Format("20060102")
 
-	fmt.Printf("str date:%v\n", str)
+	//fmt.Printf("str date:%v\n", date)
 	return date
 }
 
@@ -75,15 +95,25 @@ func getDayTodayZero(timestamp int64) int64 {
 	t, _ := time.Parse("20060102", str)
 	t = t.Add((-time.Hour * 8))
 
-	return  t.Unix()
+	return t.Unix()
 }
 
-func getDayYesterdayZero(timestamp int64) int64{
+func getDayYesterdayMidnight(timestamp int64) int64 {
 	tm := time.Unix(timestamp, 0)
 	str := tm.Format("20060102")
 
 	t, _ := time.Parse("20060102", str)
 	t = t.Add((-time.Hour * 8) - time.Second)
 
-	return  t.Unix()
+	return t.Unix()
+}
+
+func getDayTodayMidnight(timestamp int64) int64 {
+	tm := time.Unix(timestamp, 0)
+	str := tm.Format("20060102")
+
+	t, _ := time.Parse("20060102", str)
+	t = t.Add(time.Hour*16 - time.Second)
+
+	return t.Unix()
 }
