@@ -37,4 +37,19 @@ func main() {
 		fmt.Printf("i:%v val:%v\n", i, v)
 	}
 	fmt.Printf("arr:%v len:%v cap:%v\n", arr, len(arr), cap(arr))
+
+	if val, ok := servers[1]; ok {
+		fmt.Printf("servers have the key of 0 ok:%v val:%v\n", ok, val)
+	}
+
+	liveid2Visit := make(map[string][]int)
+	liveid2Visit["10010001_liveidRandStr"] = append(liveid2Visit["10010001_liveidRandStr"], 1)
+	liveid2Visit["10010001_liveidRandStr"] = append(liveid2Visit["10010001_liveidRandStr"], 2)
+	liveid2Visit["10010001_liveidRandStr"] = append(liveid2Visit["10010001_liveidRandStr"], 3)
+	liveid2Visit["10010002_liveidRandStr"] = append(liveid2Visit["10010002_liveidRandStr"], 4)
+	liveid2Visit["10010001_liveidRandStr"] = append(liveid2Visit["10010001_liveidRandStr"], 1)
+	fmt.Println(liveid2Visit)
+	for k, v := range liveid2Visit {
+		fmt.Printf("k:%v v:%v\n", k, v)
+	}
 }

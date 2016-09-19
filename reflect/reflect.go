@@ -5,8 +5,8 @@ import (
 	"strings"
 	"strconv"
 
-	"lvstatistics/statistics/model"
-	"lvstatistics/common"
+	"live_statistics/statistics/model"
+	"live_statistics/common"
 	"fmt"
 )
 

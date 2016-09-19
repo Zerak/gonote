@@ -11,10 +11,14 @@ func main() {
 	//<-time.After(time.Second * 2)
 	//fmt.Println("after time...")
 
+	getTimestampOfTime()
+
+	tick2()
+
 	// 5天前的时间
 	t5t := time.Now().Add(-time.Duration(time.Hour * 24 * time.Duration(5)))
-	fmt.Println("5 day ago:",t5t)
-	fmt.Println("5 day ago timestamp:",t5t.Unix())
+	fmt.Println("5 day ago:", t5t)
+	fmt.Println("5 day ago timestamp:", t5t.Unix())
 
 	// 取当天零点
 	dz := getDayTodayZero(time.Now().Unix())
@@ -59,9 +63,74 @@ func main() {
 	startTimer(func() {
 		fmt.Println(".")
 	})
-
 }
 
+func tick2() {
+	getMicro := func(n int64) (re int) {
+		str := strconv.Itoa(int(n))
+		fmt.Printf("str:%s\n", str)
+		if len(str) > 3 {
+			strN := str[len(str)-3:]
+			re, _ = strconv.Atoi(strN)
+		} else {
+			re = int(n)
+		}
+		return re
+	}
+	now := time.Now()
+	h := now.Hour()
+	m := now.Minute()
+	s := now.Second()
+	mi := now.UnixNano() / (1000 * 1000)
+	mi2 := getMicro(mi)
+	fmt.Printf("%02d:%02d:%02d:%03d nano:%d mi2:%03d\n", h, m, s, mi, now.UnixNano(), mi2)
+	fmt.Println("tick2")
+	key := 10
+	go func() {
+		for {
+			<-time.After(time.Second)
+			key -= 1
+			if key == 0 {
+				key = 20
+			}
+		}
+	}()
+	for {
+		//select {
+		//case <-time.After(time.Minute * 15):
+		//	fmt.Println("tick 15 minute")
+		//case <-time.After(time.Minute * 5):
+		//	fmt.Println("tick 5 minute")
+		//case <-time.After(time.Minute * 1):
+		//	fmt.Println("tick 1 minute")
+		//case <-time.After(time.Second * 6):
+		//	fmt.Println("tick 6 second")
+		////default:
+		////	time.Sleep(time.Microsecond)
+		//}
+		if key >= 1 {
+			//fmt.Println("key 1...")
+			select {
+			case <-time.After(time.Second * 15):
+				fmt.Println("tick 1 second key:", key)
+			default:
+			}
+			//fmt.Println("key 1")
+		}
+
+		if key > 10 {
+			//fmt.Println("key 10...")
+			select {
+			case <-time.After(time.Second * 5):
+				fmt.Println("tick 2 second key:", key)
+			default:
+			}
+			//fmt.Println("key 10")
+		}
+
+		time.Sleep(time.Microsecond)
+	}
+}
 func startTimer(f func()) {
 	// 立刻执行
 	f()
@@ -116,4 +185,16 @@ func getDayTodayMidnight(timestamp int64) int64 {
 	t = t.Add(time.Hour*16 - time.Second)
 
 	return t.Unix()
+}
+
+func getTimestampOfTime() {
+	date := time.Now().Format("20060102")
+	fmt.Printf("date:%v\n", date)
+	t, err := time.ParseInLocation("20060102", date, time.Local)
+	//t, err := time.Parse("20060102", date)
+	if err != nil {
+		fmt.Printf("time parse err:%v\n", err)
+	}
+	t = t.Add(time.Hour * 9)
+	fmt.Printf("time stamp:%v\n",t.Unix())
 }
