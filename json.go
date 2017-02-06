@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"gopkg.in/mgo.v2/bson"
 	"fmt"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type LiveLogModel struct {
@@ -29,6 +29,6 @@ func main() {
 
 	}
 
-	fmt.Printf("livelogModel:%v\n",logInfo)
+	fmt.Printf("livelogModel:%v\n", logInfo)
 
 }

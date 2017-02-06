@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"bytes"
 )
 
 func Encrypt(plantText, key []byte) ([]byte, error) {
@@ -26,7 +26,6 @@ func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
-
 
 func Decrypt(ciphertext, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key) //选择加密算法

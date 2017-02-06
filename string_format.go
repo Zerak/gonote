@@ -84,23 +84,22 @@ func main() {
 	idIdx := strings.Index(liveid, "?type")
 	if idIdx != -1 {
 		liveStr = common.SubString(liveid, 0, idIdx)
-	}else {
+	} else {
 		liveStr = liveid
 	}
 	fmt.Printf("liveid:%v\n", liveStr)
 
 	str2 := "192.168.1.200:10080"
-	if strings.Contains(str2,":"){
-		str2 = common.SubString(str2,0,strings.Index(str2,":"))
+	if strings.Contains(str2, ":") {
+		str2 = common.SubString(str2, 0, strings.Index(str2, ":"))
 	}
-	fmt.Printf("ip:%v\n",str2)
+	fmt.Printf("ip:%v\n", str2)
 
 	timestr := strconv.FormatInt(time.Now().Unix(), 10)
-	fmt.Printf("time fmt:%v\n",timestr)
+	fmt.Printf("time fmt:%v\n", timestr)
 
 	by := `[123 34 116 121 112 101 34 58 34 102 108 118 34 44 34 115 116 114 101 97 109 95 101 118 101 110 116 34 58 34 102 108 118 34 44 34 111 114 105 95 117 114 108 34 58 34 114 116 109 112 58 47 47 112 117 115 104 121 102 46 104 105 102 117 110 46 109 111 98 105 47 108 105 118 101 47 49 48 48 49 54 53 57 51 95 66 106 105 111 56 97 104 52 79 88 100 101 118 34 44 34 115 116 97 114 116 95 116 105 109 101 34 58 49 52 55 48 50 57 54 55 48 54 44 34 115 116 111 112 95 116 105 109 101 34 58 48 44 34 100 117 114 97 116 105 111 110 34 58 48 44 34 99 100 110 95 117 114 108 34 58 34 104 116 116 112 58 47 47 34 125]`
 	strby := string(by)
-	fmt.Printf("by:%v\n",strby)
-
+	fmt.Printf("by:%v\n", strby)
 
 }

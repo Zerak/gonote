@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	for{
+	for {
 		fetchDemo()
 	}
 	fmt.Println("The main function is executed.")
@@ -18,7 +18,7 @@ func fetchDemo() {
 	ss := []string{"A", "B", "C"}
 	fmt.Printf("Fetch the elements in %v one by one...\n", ss)
 	fetchElement(ss, 0)
-	fmt.Println("The elements fetching is done.")			// 永不会执行输出
+	fmt.Println("The elements fetching is done.") // 永不会执行输出
 }
 
 func fetchElement(ss []string, index int) (element string) {

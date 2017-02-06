@@ -49,6 +49,39 @@ func getProbabbity() int {
 	return 0
 }
 
+// 1,99.45
+// 2,0.5
+// 3,0.05
+// 4,0.0025
+func getProbabbity1() int {
+	re := rand.Intn(10000)
+	if re > 5000 {
+		return 1
+	} else if re > 475 && re <= 5000 {
+		return 2
+	} else if re > 25 && re <= 475 {
+		return 3
+	} else if re <= 25 {
+		fmt.Printf("re:%v\n", re)
+		return 4
+	}
+	return 0
+}
+func getProbabbity2() int {
+	re := rand.Intn(100)
+	if re > 5000 {
+		return 1
+	} else if re > 500 && re <= 5000 {
+		return 2
+	} else if re > 25 && re <= 500 {
+		return 3
+	} else if re <= 25 {
+		fmt.Printf("re:%v\n", re)
+		return 4
+	}
+	return 0
+}
+
 func getWithral(grade int) int {
 	if grade == 1 {
 		return rand.Intn(20) + 10 //  [10 ,30)

@@ -8,6 +8,7 @@ import (
 type Square struct {
 	side float32
 }
+
 func (sq *Square) Area() float32 {
 	return sq.side * sq.side
 }
@@ -15,6 +16,7 @@ func (sq *Square) Area() float32 {
 type Circle struct {
 	radius float32
 }
+
 func (ci *Circle) Area() float32 {
 	return ci.radius * ci.radius * math.Pi
 }

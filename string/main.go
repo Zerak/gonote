@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"gopkg.in/mgo.v2/bson"
-	"live_server/common"
+	"live_common_lib/common"
+	"math/rand"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -20,6 +22,30 @@ type LiveLogModel struct {
 }
 
 func main() {
+	vids := []string{}
+	vids = append(vids, "str1")
+	vids = append(vids, "str2")
+	vids = append(vids, "str3")
+	fmt.Println(vids)
+
+	outVids := ""
+	for i := 0; i < len(vids); i++ {
+		if i == len(vids)-1 {
+			outVids += vids[i]
+		} else {
+			outVids += vids[i] + ","
+		}
+	}
+	fmt.Println(outVids)
+	return
+
+	getInviteCode()
+	contain()
+
+	id := 97
+	str := string(id)
+	fmt.Println("string id is:", str)
+
 	info := LiveLogModel{}
 	info.Id = ""
 	info.LiveId = "10016614_2S3DB4ZsAKdev"
@@ -30,7 +56,7 @@ func main() {
 
 	now := time.Now().UnixNano()
 	WriteLog(info, "addr")
-	fmt.Printf("process time:%v us\n",(time.Now().UnixNano() - now) / 1000)
+	fmt.Printf("process time:%v us\n", (time.Now().UnixNano()-now)/1000)
 
 	//now = time.Now().UnixNano()
 	//WriteLog2(info, "addr")
@@ -54,7 +80,7 @@ func WriteLog(logInfo LiveLogModel, ipaddress string) {
 				if v >= 48 && v <= 57 { // 0-9 assic 48-57
 					continue
 				}
-				if v == 46 {	// . assic 46
+				if v == 46 { // . assic 46
 					continue
 				}
 				numIdx = i // 数字索引
@@ -109,4 +135,52 @@ func WriteLog2(logInfo LiveLogModel, ipaddress string) {
 
 		fmt.Println(logInfo)
 	}
+}
+
+const (
+	IsEnabledTimeVerify = true
+	DefaultSidAPI       = "l_h5newlivelist,l_h5hotlivelist,l_h5joinliveroom,l_h5liveroomrecommand,l_h5getlivespectatoravatar,l_h5getpersonalmsg,l_h5websign," +
+		"a_sendverifycode,a_verifyimgcodetosendmobilecode,a_loginbymobile,a_h5loginbysns,u_getuserinfo," +
+		"u_h5userinfo," +
+		"av_GetActivityInfo," +
+		"avnew_GetInviteCode,avnew_SetInviterCode,avnew_GetInvitationList, avnew_GetMyInviter, avnew_OnlineRedpacket, avnew_GenReward,avnew_GetContents"
+)
+
+func contain() {
+	cmd := "avnew_GetContents"
+	cmds := strings.Split(cmd, "_")
+
+	cmdlower := cmds[1]
+	if !strings.Contains(DefaultSidAPI, cmdlower) {
+		fmt.Printf("no contains")
+		return
+	}
+}
+
+func getInviteCode() {
+	uid := 10000000
+	for i := uid; i < 10000910; i++ {
+		str := strconv.FormatInt(int64(i), 16) + GetRandomStr(2)
+		fmt.Printf("str:%v\n", str)
+	}
+
+	uid = 10041564
+	str := strconv.FormatInt(int64(uid), 16) + "yb"
+	fmt.Printf("official str:%v\n", str)
+
+	os.Exit(0)
+}
+
+const (
+	sidrandom = "abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+)
+
+func GetRandomStr(length int) string {
+	var sidchars = make([]byte, length)
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < length; i++ {
+		index := r.Intn(len(sidrandom))
+		sidchars[i] = sidrandom[index]
+	}
+	return string(sidchars)
 }

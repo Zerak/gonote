@@ -9,6 +9,17 @@ import (
 var wg sync.WaitGroup
 
 func main() {
+	fun := func(i int) {
+		time.AfterFunc(time.Second*2, func() {
+			fmt.Println(i)
+		})
+	}
+	for i := 0; i < 100; i++ {
+		fun(i)
+	}
+
+	time.Sleep(time.Minute * 1)
+	return
 	wg.Add(1)
 
 	//go newTicker()

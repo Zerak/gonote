@@ -8,15 +8,14 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"reflect"
-	"time"
 	"strconv"
+	"time"
 )
 
 const (
 	MongoDB    = "background"
 	Collection = "test"
 )
-
 
 type UserDataMongo struct {
 	Id           bson.ObjectId `bson:"_id"json:"id"`
@@ -72,7 +71,6 @@ func main() {
 	//}
 	//fmt.Printf("insert excute time:%v", time.Now().Sub(now))
 
-
 	// update test
 	y, m, d := time.Now().Date() // 当前日期
 	date, _ := strconv.Atoi(fmt.Sprintf("%04d%02d%02d", y, m, d))
@@ -83,9 +81,9 @@ func main() {
 	mp["c"] = "a"
 	mp["d"] = "a"
 	mp["e"] = "a"
-	fmt.Printf("mp:f:%v\n",mp["f"])
-	for k,v := range mp{
-		fmt.Printf("%v:%v\n",k,v)
+	fmt.Printf("mp:f:%v\n", mp["f"])
+	for k, v := range mp {
+		fmt.Printf("%v:%v\n", k, v)
 	}
 	fmt.Println()
 
@@ -96,40 +94,40 @@ func main() {
 		recLen := len(res.Record)
 		//rec := res.Record[resLen-1].(Record) // 取最后一条Record数据
 		rec := res.Record[recLen-1].(bson.M) // 取最后一条Record数据
-		fmt.Printf("recType:%v\n",reflect.TypeOf(rec))
+		fmt.Printf("recType:%v\n", reflect.TypeOf(rec))
 
 		fmt.Println()
-		for k,v := range rec {
-			fmt.Printf("%v:%v type:k %v, v %v\n",k,v, reflect.TypeOf(k), reflect.TypeOf(v))
+		for k, v := range rec {
+			fmt.Printf("%v:%v type:k %v, v %v\n", k, v, reflect.TypeOf(k), reflect.TypeOf(v))
 		}
 
-		var(
-			iLogin = 0
+		var (
+			iLogin  = 0
 			iLogout = 0
 		)
 		login := rec["logintime"].(int64)
 		logout := rec["logouttime"].(int64)
-		fmt.Printf("login:%v logout:%v logout:%v\n",login,logout,reflect.TypeOf(logout))
+		fmt.Printf("login:%v logout:%v logout:%v\n", login, logout, reflect.TypeOf(logout))
 		if login != 0 {
-			tm := time.Unix(login,0)
+			tm := time.Unix(login, 0)
 			iLogin, _ = strconv.Atoi(tm.Format("20060102"))
 		}
 		if logout != 0 {
-			tm := time.Unix(logout,0)
+			tm := time.Unix(logout, 0)
 			iLogout, _ = strconv.Atoi(tm.Format("20060102"))
 		}
-		fmt.Printf("logouttime:%v logintime:%v\n",iLogout,iLogin)
+		fmt.Printf("logouttime:%v logintime:%v\n", iLogout, iLogin)
 
 		if iLogout == 0 {
-			 // 更新logouttime
+			// 更新logouttime
 			con := bson.M{
-				"uid": 2, "date": date, "record.logintime":login,
+				"uid": 2, "date": date, "record.logintime": login,
 			}
 			var updateRec []interface{}
 			rec := Record{}
 			rec.LoginTime = login
 			rec.LogoutTime = time.Now().Unix()
-			updateRec = append(updateRec,rec)
+			updateRec = append(updateRec, rec)
 			update := bson.M{
 				"$set": bson.M{"record.$.logouttime": rec.LogoutTime},
 			}
@@ -137,17 +135,14 @@ func main() {
 			if err != nil {
 				panic(fmt.Sprintf("update err :%v\n", err))
 			}
-			fmt.Println("update ok",rec.LogoutTime)
+			fmt.Println("update ok", rec.LogoutTime)
 		}
 
 		fmt.Println()
 
-
 		fmt.Printf("resuletsLen:%v recLen:%v rec:%v\n", len(results), recLen, rec)
 		fmt.Println(res)
 	}
-	
-
 
 	//var updateRec []interface{}
 	////for i := 0; i < 3; i++ {

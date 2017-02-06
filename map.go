@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 )
 
 func main() {
@@ -21,8 +22,15 @@ func main() {
 	//	fmt.Printf("pp nill\n")
 	//}
 
+	//a := float64(10) /100
+	var b int
+	b = 10
+	a := float64(b) / 100
+	fmt.Printf("type a:%v :%v\n", a, reflect.TypeOf(a))
+
 	var servers map[int32]int32
 	servers = make(map[int32]int32, 1)
+	servers = make(map[int32]int32, 1) // 多次make
 	for k, v := range servers {
 		fmt.Printf("key:%v val:%v \n", k, v)
 	}
@@ -52,4 +60,18 @@ func main() {
 	for k, v := range liveid2Visit {
 		fmt.Printf("k:%v v:%v\n", k, v)
 	}
+
+	fmt.Println("kkkk")
+	for k := range liveid2Visit {
+		fmt.Printf("k:%v\n", k)
+	}
+
+	var base int
+	var ca float64
+	base = 1000000
+	ca = 0.12345
+
+	sum := ca * float64(base)
+	fmt.Printf("sum:%v intSum:%v\n", sum, int(sum))
+
 }

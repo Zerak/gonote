@@ -11,6 +11,12 @@ func main() {
 	//<-time.After(time.Second * 2)
 	//fmt.Println("after time...")
 
+	tmp, _ := time.ParseInLocation("20060102", "20161119", time.Local)
+	tt2 := tmp.Unix()
+	fmt.Printf("tt:%v\n", tt2)
+	go testAfter()
+
+	getTimeTick()
 	getTimestampOfTime()
 
 	tick2()
@@ -196,5 +202,14 @@ func getTimestampOfTime() {
 		fmt.Printf("time parse err:%v\n", err)
 	}
 	t = t.Add(time.Hour * 9)
-	fmt.Printf("time stamp:%v\n",t.Unix())
+	fmt.Printf("time stamp:%v\n", t.Unix())
+}
+func getTimeTick() {
+}
+
+func testAfter() {
+	for {
+		<-time.After(time.Second)
+		fmt.Printf(".")
+	}
 }

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net"
 	"net/rpc"
-	"strconv"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 )
 
@@ -48,7 +48,7 @@ func (r *RPC) Ping(arg string, reply *string) error {
 
 // Connect auth and registe login
 func (r *RPC) Connect(arg string, reply *string) (err error) {
-	reply = &Reply
+	//reply = &Reply
 	fmt.Printf("RPC::Connect arg[%v] reply[%v]\n", arg, reply)
 	r.auther.Auth(arg)
 	return
@@ -73,6 +73,7 @@ func rpcListen(network, addr string) {
 			fmt.Printf("listener.Close() error(%v)", err)
 		}
 	}()
+	fmt.Printf("rpc listen at->%v:%v\n", network, addr)
 	rpc.Accept(l)
 }
 

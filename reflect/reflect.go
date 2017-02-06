@@ -2,12 +2,12 @@ package main
 
 import (
 	"reflect"
-	"strings"
 	"strconv"
+	"strings"
 
-	"live_statistics/statistics/model"
-	"live_statistics/common"
 	"fmt"
+	"live_statistics/common"
+	"live_statistics/statistics/model"
 )
 
 func LoadTableStruct(st interface{}) (fields map[string]model.TagStruct) {
@@ -46,7 +46,7 @@ func LoadTableStruct(st interface{}) (fields map[string]model.TagStruct) {
 func main() {
 	//var baseTableFields map[string]model.TagStruct
 	baseTableFields := LoadTableStruct(new(model.LoginBaseTable))
-	for k,v := range baseTableFields {
-		fmt.Printf("key:%v v:%v vType:%v\n",k,v,reflect.TypeOf(v))
+	for k, v := range baseTableFields {
+		fmt.Printf("key:%v v:%v vType:%v\n", k, v, reflect.TypeOf(v))
 	}
 }
