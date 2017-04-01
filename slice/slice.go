@@ -13,6 +13,12 @@ type Sql struct {
 }
 
 func main() {
+
+	testSize := make([]int, 0, 1)
+	testSize = append(testSize, 1)
+	testSize = append(testSize, 2)
+	fmt.Printf("size:%v last:%v\n", testSize, testSize[:])
+	return
 	var cacheSql []Sql
 	for i := 0; i < 10; i++ {
 		sql := Sql{}
