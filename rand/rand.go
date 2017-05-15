@@ -10,9 +10,10 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 
-	//for i := 0; i < 1000; i++ {
-	//	fmt.Println(rand.Int63(), " ", rand.Int())
-	//}
+	for i := 0; i < 1000; i++ {
+		fmt.Println(rand.Int63(), " ", rand.Int(), " ", 1+rand.Intn(5))
+	}
+	return
 
 	time.AfterFunc(time.Second*5, func() {
 		fmt.Printf("tick\n")

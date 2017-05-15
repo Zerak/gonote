@@ -6,6 +6,13 @@ import (
 )
 
 func main() {
+	// 判断是否存在某个key
+	keyMp := make(map[int]int)
+	keyMp[1] = 10
+	keyMp[2] = 20
+	if val, ok := keyMp[1]; ok {
+		fmt.Println("val:", val)
+	}
 	//mp := map[string]int{"a":1,"b":2,"c":3}
 	//
 	//val, ok := mp["d"]
@@ -49,6 +56,7 @@ func main() {
 	if val, ok := servers[1]; ok {
 		fmt.Printf("servers have the key of 0 ok:%v val:%v\n", ok, val)
 	}
+	fmt.Printf("servers have the key of 1 ok:%v\n", servers[1])
 
 	liveid2Visit := make(map[string][]int)
 	liveid2Visit["10010001_liveidRandStr"] = append(liveid2Visit["10010001_liveidRandStr"], 1)
