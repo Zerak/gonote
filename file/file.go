@@ -12,13 +12,13 @@ import (
 func main() {
 	flag.Parse()
 
-	arg := flag.String("file", "", "the file name to be parse")
-	if *arg == "" {
-		fmt.Println("err arg")
-		return
-	}
-	fmt.Println(*arg)
-	return
+	//arg := flag.String("file", "", "the file name to be parse")
+	//if *arg == "" {
+	//	fmt.Println("err arg")
+	//	return
+	//}
+	//fmt.Println(*arg)
+	//return
 
 	result, err := os.OpenFile("result.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 	if err != nil {

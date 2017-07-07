@@ -32,3 +32,36 @@ func main() {
 	fmt.Printf("livelogModel:%v\n", logInfo)
 
 }
+
+func PublishChatroom(fromUserId string, toChatroomId []string, txtMessage TxtMessage) (*CodeSuccessReslut, error) {
+	if fromUserId == "" {
+		return nil, errors.New("Paramer 'fromUserId' is required")
+	}
+
+	if len(toChatroomId) == 0 {
+		return nil, errors.New("Paramer 'toChatroomId' is required")
+	}
+
+	destinationUrl := RONGCLOUDURI + "/message/chatroom/publish.json"
+	req := httplib.Post(destinationUrl)
+	fillHeader(req, self.AppKey, self.AppSecret)
+	req.Param("fromUserId", fromUserId)
+	for _, item := range toChatroomId {
+		req.Param("toChatroomId", item)
+	}
+	req.Param("objectName", txtMessage.GetType())
+	jsonStr, err := ToJson(txtMessage)
+	if err != nil {
+		return nil, err
+	}
+	req.Param("content", jsonStr)
+	byteData, err := req.Bytes()
+	if err != nil {
+		return nil, err
+	} else {
+		strData := string(byteData)
+		var ret = CodeSuccessReslut{}
+		err = JsonParse(strData, &ret)
+		return &ret, err
+	}
+}

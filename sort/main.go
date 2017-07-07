@@ -12,7 +12,7 @@ type Person struct {
 }
 
 func (p Person) String() string {
-	return fmt.Sprintf("%v: %v", p.Name, p.Age)
+	return fmt.Sprintf("%v:%v ", p.Name, p.Age)
 }
 
 // ByAge implements sort.Interface for []Person based on
@@ -37,9 +37,11 @@ func main() {
 		{5, 26},
 	}
 
-	fmt.Println(people)
+	fmt.Println("base:", people)
 	sort.Sort(ByAge(people))
-	fmt.Println(people)
+	fmt.Println("sort:", people)
+	sort.Sort(sort.Reverse(ByAge(people)))
+	fmt.Println("rever:", people)
 
 	if "1" > "11" {
 		fmt.Printf("err\n")
