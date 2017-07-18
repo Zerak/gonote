@@ -5,20 +5,52 @@ import (
 	"sync/atomic"
 )
 
+type CryptFunc func(dst, src []byte)
+type DecryptFunc func(dst, src []byte)
+
 type Packet interface {
 	Len() int
 	Bytes() []byte
 }
 
 type ReadSession struct {
+	headerSize int
+	crypt      CryptFunc
 }
+
+func NewReadSession() *ReadSession {
+	return &ReadSession{}
+}
+
+func (r *ReadSession) ReadPacket() (int, error) {
+	if  {
+		
+	}
+	if r.crypt != nil {
+		r.crypt()
+	}
+	return 0, nil
+}
+
+func (r *ReadSession) SetHeaderSize(size int) {
+	r.headerSize = size
+}
+func (r *ReadSession) SetCryptFunc(crypt CryptFunc) {
+	r.crypt = crypt
+}
+
 type WriteSession struct {
-	addr   string
-	conn   net.Conn
-	closed int32
+	addr    string
+	conn    net.Conn
+	closed  int32
+	decrypt DecryptFunc
 
 	quitChan  chan struct{}
 	writeChan chan Packet
+}
+
+func NewWriteSession() *WriteSession {
+	return &WriteSession{}
 }
 
 func (w *WriteSession) setClosed() {
@@ -43,7 +75,18 @@ func NewRWSession(r ReadSession, w WriteSession) *RWSession {
 }
 
 func (rw *RWSession) startReadLoop(start, end chan<- struct{}) {
+	start <- struct{}{}
 
+	for {
+		_, err := rw.ReadSession.ReadPacket()
+		if err != nil {
+			rw.setClosed()
+		}
+		if rw.getClosed() {
+			break
+		}
+	}
+	end <- struct{}{}
 }
 
 func (rw *RWSession) startWriteLoop(start, end chan<- struct{}) {
