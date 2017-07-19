@@ -1,23 +1,38 @@
 package core
 
-import "net"
+import (
+	"fmt"
+	"net"
+)
+
+var (
+	//r  = *ReadSession{}
+	w  = *WriteSession{}
+	rw = *RWSession{}
+)
 
 func main() {
-	onStart := func() {
-
-	}
-	onEnd := func() {
-
-	}
-	handler := func(conn net.Conn) {
-		conn
-		r := NewReadSession()
-		w := NewWriteSession()
-		rw := NewRWSession(r, w)
-
-		rw.Run(onStart, onEnd)
-	}
-
 	addr := "localhost:6200"
-	ListenAndServeTcp(addr, handler, true)
+	ListenAndServeTcp(addr, handleConnection, true)
+}
+
+func handleConnection(conn net.Conn) {
+	rw = NewRWSession(handleRecvMsg)
+
+	rw.Run(onStart, onEnd)
+}
+
+func handleRecvMsg(b []byte) {
+	fmt.Println("recv str:", string(b))
+	fmt.Println("recv byte:", b)
+
+	rw.Send(BytesPacket{"str"})
+}
+
+func onStart() {
+	fmt.Println("server started")
+}
+
+func onEnd() {
+	fmt.Println("server ended")
 }
