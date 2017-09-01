@@ -85,7 +85,7 @@ type rwSession struct {
 	body             []byte
 }
 
-func NewRWSession(ph PacketHandler) *RWSession {
+func NewRWSession(ph PacketHandler) *rwSession{
 	return &rwSession{packHandle: ph}
 }
 
