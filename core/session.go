@@ -113,12 +113,12 @@ func (rw *rwSession) readPacket() (int, error) {
 
 	// parse header
 	length := int(binary.BigEndian.Uint32(rw.header[:]))
-	if length > MaxBodySize {
+	if int(length) > MaxBodySize {
 		return total, errPacketTooBig
 	}
 
 	// parse body
-	if len(rw.body) < length {
+	if len(rw.body) < int(length) {
 		rw.body = make([]byte, length)
 	}
 	n, err = rw.read(rw.body[:length])
