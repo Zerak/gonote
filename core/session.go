@@ -9,18 +9,6 @@ import (
 )
 
 type PacketHandler func(b []byte)
-type EncryptFunc func(dst, src []byte)
-type DecryptFunc func(dst, src []byte)
-
-type Packet interface {
-	Len() int
-	Bytes() []byte
-}
-
-type BytesPacket []byte
-
-func (p BytesPacket) Len() int      { return len(p) }
-func (p BytesPacket) Bytes() []byte { return []byte(p) }
 
 type RWSession interface {
 	// Conn return the real connection
@@ -48,7 +36,7 @@ type RWSession interface {
 var (
 	errPacketTooBig = errors.New("packet msg too big")
 )
-var (
+const (
 	HeaderSize  = 2
 	MaxBodySize = 4 * 1024 * 1024
 )
@@ -124,7 +112,7 @@ func (rw *rwSession) readPacket() (int, error) {
 	}
 
 	// parse header
-	length := binary.BigEndian.Uint32(rw.header[:])
+	length := int(binary.BigEndian.Uint32(rw.header[:]))
 	if int(length) > MaxBodySize {
 		return total, errPacketTooBig
 	}
@@ -191,6 +179,7 @@ func (rw *rwSession) startWriteLoop(start, end chan<- struct{}) {
 	end <- struct{}{}
 }
 
+// Conn conn return the connection of the client
 func (rw *rwSession) Conn() net.Conn {
 	return rw.conn
 }
