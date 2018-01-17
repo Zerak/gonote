@@ -36,6 +36,7 @@ type RWSession interface {
 var (
 	errPacketTooBig = errors.New("packet msg too big")
 )
+
 const (
 	HeaderSize  = 2
 	MaxBodySize = 4 * 1024 * 1024
