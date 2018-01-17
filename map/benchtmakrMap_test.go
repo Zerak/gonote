@@ -4,6 +4,7 @@ package main
 // run with: $ go test --bench=. -v .
 // @see https://twitter.com/karlseguin/status/524452778093977600
 import (
+	"fmt"
 	"math/rand"
 	"strconv"
 	"testing"
@@ -25,13 +26,16 @@ func BenchmarkStringMapExcluded(b *testing.B) {
 
 	rand.Seed(int64(b.N))
 	b.ResetTimer()
+	get := 0
 	for n := 0; n < b.N; n++ {
-		for i := 0; i < LOOKUPS; i++ {
-			needle := strconv.Itoa(rand.Intn(SIZE))
-			if _, ok := lookup[needle]; ok {
-			}
+		//for i := 0; i < LOOKUPS; i++ {
+		needle := strconv.Itoa(rand.Intn(SIZE))
+		if _, ok := lookup[needle]; ok {
+			get++
 		}
+		//}
 	}
+	fmt.Printf("StringMap get:%v\n", get)
 }
 func BenchmarkStringMapIncluded(b *testing.B) {
 	rand.Seed(int64(b.N))
@@ -166,4 +170,25 @@ func BenchmarkStructSliceIncluded(b *testing.B) {
 			}
 		}
 	}
+}
+
+func BenchmarkMapInt(b *testing.B) {
+	rand.Seed(int64(b.N))
+	b.ResetTimer()
+
+	size := 20000000
+	look := make(map[int]bool, size)
+	for n := 0; n < b.N; n++ {
+		key := rand.Intn(size)
+		look[key] = true
+	}
+
+	total := 0
+	for n := 0; n < b.N; n++ {
+		key := rand.Intn(size)
+		if _, ok := look[key]; ok {
+			total++
+		}
+	}
+	fmt.Printf("check:%v\n", total)
 }

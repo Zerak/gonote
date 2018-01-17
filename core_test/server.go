@@ -1,1 +1,5 @@
-package core_test
+package main
+
+func main() {
+
+}

@@ -46,5 +46,5 @@ func PKCS7UnPadding(plantText []byte, blockSize int) []byte {
 }
 
 func main() {
-	Encrypt("hello", "")
+	Encrypt([]byte("hello"), []byte(""))
 }

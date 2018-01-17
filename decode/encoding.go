@@ -1,12 +1,14 @@
 package main
 
 import (
-	"bufio"
-	"bytes"
+	//"bufio"
+	//"bytes"
 	"errors"
 	"fmt"
 	"io"
 
+	"bytes"
+	"encoding/json"
 	"github.com/golang/protobuf/proto"
 )
 
@@ -129,15 +131,46 @@ func decodeMessageHeader(b []byte) (n int, name string, err error) {
 //	return v, err
 //}
 
-func main() {
-	//l := 10
-	//reBuf := EncodeLength(l, []byte("ab"))
-	//fmt.Printf("rebuf:%v, lenRebuf[%v]\n", reBuf, len(reBuf))
-	//
-	//reLen := DecodeLength(reBuf)
-	//fmt.Printf("relen:%v\n", reLen)
+//func main() {
+//	//l := 10
+//	//reBuf := EncodeLength(l, []byte("ab"))
+//	//fmt.Printf("rebuf:%v, lenRebuf[%v]\n", reBuf, len(reBuf))
+//	//
+//	//reLen := DecodeLength(reBuf)
+//	//fmt.Printf("relen:%v\n", reLen)
+//
+//	buf := bufio.NewWriter(bytes.NewBuffer([]byte("a")))
+//	encodeMessageHeader(buf, "name", 10)
+//	fmt.Printf("buf:%v\n", buf)
+//}
 
-	buf := bufio.NewWriter(bytes.NewBuffer([]byte("a")))
-	encodeMessageHeader(buf, "name", 10)
-	fmt.Printf("buf:%v\n", buf)
+func main() {
+	var data = []byte(`{"status": 200}`)
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(data, &result); err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+
+	var status = int(result["status"].(float64)) //ok
+	fmt.Println("status value:", status)
+
+	fmt.Println("ver2")
+	ver2()
+}
+
+func ver2() {
+	var data = []byte(`{"status": 200}`)
+
+	var result struct {
+		Status int `json:"status"`
+	}
+
+	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&result); err != nil {
+		fmt.Println("err:", err)
+		return
+	}
+
+	fmt.Printf("result: %+v", result)
 }

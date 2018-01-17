@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"mahjong/mjlib"
+	"gonote/mahjong/mjlib"
 )
 
 func print_cards(cards []int) {

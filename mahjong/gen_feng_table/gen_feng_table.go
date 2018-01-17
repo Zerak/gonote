@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"mahjong/mjlib"
+	"gonote/mahjong/mjlib"
 )
 
 var gui_tested = [9]*map[int]bool{}
