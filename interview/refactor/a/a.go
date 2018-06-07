@@ -1,5 +1,7 @@
 package a
 
+import "gonote/interview/refactor"
+
 type AResponse struct {
 }
 
@@ -15,10 +17,10 @@ type A struct {
 	Content string
 }
 
-func (t *A) Add() (ares AResponse, err error) {
+func (t *A) Add() (ares refactor.Responser, err error) {
 	return
 }
 
-func (t *A) Sub() (ares AResponse, err error) {
+func (t *A) Sub() (ares refactor.Responser, err error) {
 	return
 }

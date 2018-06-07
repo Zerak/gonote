@@ -8,6 +8,10 @@ type MemoryDataStore struct {
 	Users map[int64]string
 }
 
+func (mds *MemoryDataStore) ID() int {
+	return 100
+}
+
 func (mds *MemoryDataStore) Name() string {
 	return "MemoryDataStore"
 }

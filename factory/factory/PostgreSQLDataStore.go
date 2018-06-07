@@ -8,6 +8,10 @@ type PostgreSQLDataStore struct {
 	DB  sql.DB
 }
 
+func (pds *PostgreSQLDataStore) ID() int {
+	return 9999
+}
+
 func (pds *PostgreSQLDataStore) Name() string {
 	return "PostgreSQLDataStore"
 }

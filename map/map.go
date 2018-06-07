@@ -42,8 +42,12 @@ func main() {
 
 	fmt.Printf("pseudorand test...\n")
 	for i := 0; i < 10; i++ {
-		rand.Seed()
 		fmt.Println(rand.Intn(10))
 	}
 
+	m := make(map[string]int)
+	m["101:10001"] = 100
+
+	v, _ := m["101:10001"]
+	fmt.Println("value:", v, " ok:", "")
 }

@@ -2,7 +2,7 @@ package refactor
 
 import (
 	"gonote/interview/refactor/a"
-	"gonote/interview/refactor/b"
+	//"gonote/interview/refactor/b"
 )
 
 type Responser interface {
@@ -20,7 +20,7 @@ func getClass(tpe int) Baser {
 	case 1:
 		return &a.A{Content: "a"}
 	case 2:
-		return &b.B{Content: "b"}
+		//return &b.B{Content: "b"}
 	}
 	return nil
 }
