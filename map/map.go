@@ -46,4 +46,9 @@ func main() {
 		fmt.Println(rand.Intn(10))
 	}
 
+	m := make(map[string]int)
+	m["101:10001"] = 100
+
+	v, _ := m["101:10001"]
+	fmt.Println("value:", v, " ok:", "")
 }

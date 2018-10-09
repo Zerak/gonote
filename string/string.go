@@ -4,8 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"hash/fnv"
+	"math"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var (
@@ -18,7 +20,40 @@ func Hash(s string) uint64 {
 	return h.Sum64()
 }
 
+func getDate(date int) string {
+	d := strconv.Itoa(date)
+	d = string([]byte(d)[2:])
+	return d
+}
+
 func main() {
+	fmt.Println(getDate(20180102))
+	return
+	a := 0.1
+	b := 0.2
+	c := a + b
+	fmt.Println(c)
+
+	score := 376
+	weight := 22
+	val := float64(score) + float64(score)*float64(weight)/100.0
+	fmt.Println(val)
+	fmt.Println(int(val))
+	fmt.Println(math.Trunc(val))
+
+	val2 := score + score*weight/100
+	fmt.Println("v21:", val2)
+	fmt.Println("v22:", val2)
+	return
+
+	uuid := time.Now().UnixNano()
+	s := fmt.Sprintf("%v", uuid)
+	fmt.Println(s)
+	return
+
+	android := "ANDROID"
+	fmt.Println(strings.Split(android, ","))
+	return
 	//did := "C7DDC9A6-3448-4945-8CB4-02DF983049D2"
 	did := "f9ba2ecad7dbf3596a990bd5289e0103"
 	key := Hash(did)

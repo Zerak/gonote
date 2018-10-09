@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"net/http"
 )
 
 func main() {
@@ -14,4 +15,18 @@ func main() {
 	} else {
 		fmt.Println("ipv4")
 	}
+
+	http.Handle("index", NewHttp())
+	http.ListenAndServe("localhost", NewHttp())
+}
+
+type DefaultHttpServer struct {
+}
+
+func (h *DefaultHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func NewHttp() *DefaultHttpServer {
+	return &DefaultHttpServer{}
 }
