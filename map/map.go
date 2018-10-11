@@ -6,6 +6,19 @@ import (
 )
 
 func main() {
+	mmmm := make(map[int]int64)
+	mmmm[123] = 12340
+	for k, v := range mmmm {
+		fmt.Println(k, v)
+	}
+	return
+
+	m2 := make(map[string]string)
+	m2["2"] = "21"
+	if v, ok := m2["2"]; ok {
+		fmt.Println(v)
+	}
+
 	//type Key [64]byte
 	//type Value struct {
 	//	Name      [32]byte

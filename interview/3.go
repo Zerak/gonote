@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// todo
 func fix(s []int) {
 	s[0] = 2
 	tmp := make([]int, 3)
