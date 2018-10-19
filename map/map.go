@@ -55,6 +55,7 @@ func main() {
 
 	fmt.Printf("pseudorand test...\n")
 	for i := 0; i < 10; i++ {
+		rand.Seed(int64(i))
 		fmt.Println(rand.Intn(10))
 	}
 

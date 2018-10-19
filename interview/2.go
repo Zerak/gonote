@@ -9,8 +9,11 @@ import "fmt"
 func main() {
 	arr := [6]int{1, 2, 3, 4, 5, 6}
 	s1 := arr[0:4]
-	fmt.Println("s1 len:", len(s1), " cap:", cap(s1))
+	fmt.Print("s1 len:", len(s1), " cap:", cap(s1))
 	fmt.Println(s1)
+	s11 := arr[0:]
+	fmt.Print("s11 len:", len(s11), " cap:", cap(s11))
+	fmt.Println(s11)
 
 	s2 := s1[2:]
 	fmt.Println("s2 len:", len(s2), " cap:", cap(s2))

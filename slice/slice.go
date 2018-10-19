@@ -18,7 +18,7 @@ func main() {
 	testSize = append(testSize, 1)
 	testSize = append(testSize, 2)
 	fmt.Printf("size:%v last:%v\n", testSize, testSize[:])
-	return
+
 	var cacheSql []Sql
 	for i := 0; i < 10; i++ {
 		sql := Sql{}
@@ -55,11 +55,22 @@ func main() {
 	}
 	fmt.Println("test slice:", ts)
 	uid := 5
-	for k, v := range ts {
-		if v == uid {
-			ts = append(ts[:k], ts[k+1:]...)
-			break
+	//for k, v := range ts {
+	//	if v == uid {
+	//		ts = append(ts[:k], ts[k+1:]...)
+	//		continue
+	//	}
+	//	fmt.Println("k:", k, " v:", v)
+	//}
+
+	fmt.Println()
+	for i := 0; i < len(ts); i++ {
+		if ts[i] == uid {
+			ts = append(ts[:i], ts[i+1:]...)
+			i--
+			continue
 		}
+		fmt.Println("k:", i, " v:", ts[i])
 	}
 	fmt.Println("test slice:", ts)
 }

@@ -1,4 +1,4 @@
-package sort
+package main
 
 type Sorter interface {
 	Len() int
