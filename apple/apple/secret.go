@@ -1,4 +1,4 @@
-package main
+package apple
 
 import (
 	"crypto/x509"
@@ -39,7 +39,7 @@ func GenerateClientSecret(signingKey, teamID, clientID, keyID string) (string, e
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
-	token.Header["key"] = keyID
+	token.Header["kid"] = keyID
 
 	return token.SignedString(privKey)
 }

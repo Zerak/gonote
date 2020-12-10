@@ -9,7 +9,7 @@ import (
 	"github.com/mlaoji/ygo/lib"
 )
 
-// GetDateUnit get date unit format 20180102
+// GetDate get date unit format 20180102
 func GetDateUnit(t time.Time) (int, error) {
 	str := t.Format("20060102")
 	return strconv.Atoi(str)

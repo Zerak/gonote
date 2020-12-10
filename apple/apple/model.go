@@ -1,4 +1,4 @@
-package main
+package apple
 
 // WebValidationTokenRequest is based off of https://developer.apple.com/documentation/signinwithapplerestapi/generate_and_validate_tokens
 type WebValidationTokenRequest struct {

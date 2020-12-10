@@ -28,6 +28,7 @@ func main() {
 
 	req := &RpcRequest{Param: "testParam"}
 	res := &RpcResponse{}
+	//err := c.Call(context.Background(), "RpcRequest", "Request", req, res)
 	err := c.Call(context.Background(), "RpcRequest", "Request", req, res)
 	if err != nil {
 		panic(err)

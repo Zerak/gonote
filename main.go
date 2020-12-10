@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 )
 
@@ -20,8 +21,12 @@ func main() {
 	hb.Header = 0x05
 	hb.Cmd = 10010
 	hb.Len = 0
+	b, err := json.Marshal(&hb)
+	if err != nil {
+		panic(err)
+	}
 	buf := &bytes.Buffer{}
-	if err := binary.Write(buf, binary.BigEndian, hb); err != nil {
+	if err := binary.Write(buf, binary.BigEndian, b); err != nil {
 		panic(err)
 	}
 

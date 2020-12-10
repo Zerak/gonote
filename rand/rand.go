@@ -8,11 +8,16 @@ import (
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	//rand.Seed(time.Now().UnixNano())
 
+	idx := 0
 	for i := 0; i < 1000; i++ {
+		rand.Seed(1234567)
 		fmt.Println(rand.Int63(), " ", rand.Int(), " ", 1+rand.Intn(5))
+		idx = i
+		break
 	}
+	fmt.Println(idx)
 	return
 
 	time.AfterFunc(time.Second*5, func() {

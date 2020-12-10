@@ -13,6 +13,14 @@ type Sql struct {
 }
 
 func main() {
+	store := make(map[int][]int)
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 5; j++ {
+			store[i] = append(store[i], j)
+		}
+	}
+
+	store[3] = store[3][1:]
 
 	testSize := make([]int, 0, 1)
 	testSize = append(testSize, 1)

@@ -18,5 +18,10 @@ func main() {
 		v.Age = 11
 	}
 
+	v := userMap[1]
+
+	v.Name = "11"
+	v.Age = 21
+
 	fmt.Println("data:", userMap)
 }
