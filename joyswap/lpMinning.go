@@ -1,181 +1,169 @@
 package main
 
-//import "fmt"
-//
-//const (
-//	// block per day
-//	BLOCK_PER_DAY = 6100
-//
-//	// JOYS tokens mined per block.
-//	JOYS_PER_BLOCK = 64
-//
-//	// BONUS_MULTIPLIER_8 Bonus muliplier for early joys makers.
-//	//  1-12 8*64 = 512
-//	// 13-24 4*64 = 256
-//	// 25-36 2*64 = 128
-//	// 37-48 1*64 = 64
-//	BONUS_MULTIPLIER_8 = 8
-//	BONUS_MULTIPLIER_4 = 4
-//	BONUS_MULTIPLIER_2 = 2
-//	BONUS_MULTIPLIER_1 = 1
-//
-//	// mined 48 days
-//	MINED_DAYS = 48
-//
-//	// continue days per every mine stage
-//	CONTINUE_DAYS_PER_STAGE = 12
-//
-//	bonusBeginBlock = 100
-//)
-//
-//type PeriodInfo struct {
-//	begin      int
-//	end        int
-//	multiplier int
-//}
-//
-//var periodInfo []PeriodInfo
-//
-//func main() {
-//	bonusEndBlock := bonusBeginBlock + BLOCK_PER_DAY*MINED_DAYS
-//
-//	var (
-//		multiplier   = BONUS_MULTIPLIER_8
-//		currentBlock = bonusBeginBlock
-//		lastBlock    = currentBlock
-//	)
-//	for ; currentBlock < bonusEndBlock; currentBlock += CONTINUE_DAYS_PER_STAGE * BLOCK_PER_DAY {
-//		periodInfo = append(periodInfo, PeriodInfo{
-//			begin:      lastBlock,
-//			end:        currentBlock + CONTINUE_DAYS_PER_STAGE*BLOCK_PER_DAY,
-//			multiplier: multiplier,
-//		})
-//
-//		lastBlock = currentBlock + CONTINUE_DAYS_PER_STAGE*BLOCK_PER_DAY + 1
-//		multiplier = multiplier / 2
-//	}
-//
-//	fmt.Println(periodInfo)
-//
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//	testCase0()
-//	fmt.Println()
-//
-//	testCase1()
-//	fmt.Println()
-//
-//	testCase2()
-//	fmt.Println()
-//
-//	testCase3()
-//	fmt.Println()
-//
-//	testCase4()
-//	fmt.Println()
-//
-//	testCase5()
-//	fmt.Println()
-//}
-//
-//func testCase0() {
-//	fmt.Println("testCase0")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//	multi := getMultiplier(90, 101)
-//	fmt.Println(multi, multi == (101-100+1)*BONUS_MULTIPLIER_8)
-//
-//	multi = getMultiplier(90, 73305)
-//	fmt.Println(multi, multi == (73300-100+1)*BONUS_MULTIPLIER_8+(73305-73301+1)*BONUS_MULTIPLIER_4)
-//}
-//
-//func testCase1() {
-//	fmt.Println("testCase1")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//	multi := getMultiplier(100, 101)
-//	fmt.Println(multi, multi == (101-100+1)*BONUS_MULTIPLIER_8)
-//
-//	multi = getMultiplier(100, 73305)
-//	fmt.Println(multi, multi == (73300-100+1)*BONUS_MULTIPLIER_8+(73305-73301+1)*BONUS_MULTIPLIER_4)
-//
-//	multi = getMultiplier(100, 146503)
-//	fmt.Println(multi, multi == (73300-100+1)*BONUS_MULTIPLIER_8+(146500-73301+1)*BONUS_MULTIPLIER_4+(146503-146501+1)*BONUS_MULTIPLIER_2)
-//
-//	multi = getMultiplier(100, 219703)
-//	fmt.Println(multi, multi == (73300-100+1)*BONUS_MULTIPLIER_8+(146500-73301)*BONUS_MULTIPLIER_4+(219700-146501+1)*BONUS_MULTIPLIER_2+(219703-219701+1)*BONUS_MULTIPLIER_1)
-//
-//	multi = getMultiplier(100, 292903)
-//	fmt.Println(multi, multi == (73300-100+1)*BONUS_MULTIPLIER_8+(146500-73301+1)*BONUS_MULTIPLIER_4+(219700-146501+1)*BONUS_MULTIPLIER_2+(292900-219701+1)*BONUS_MULTIPLIER_1)
-//}
-//
-//func testCase2() {
-//	fmt.Println("testCase2")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//	multi := getMultiplier(73305, 73309)
-//	fmt.Println(multi, multi == (73309-73305+1)*BONUS_MULTIPLIER_4)
-//
-//	multi = getMultiplier(73305, 146503)
-//	fmt.Println(multi, multi == (146500-73305+1)*BONUS_MULTIPLIER_4+(146503-146501+1)*BONUS_MULTIPLIER_2)
-//
-//	multi = getMultiplier(73305, 219705)
-//	fmt.Println(multi, multi == (146500-73305+1)*BONUS_MULTIPLIER_4+(219700-146501+1)*BONUS_MULTIPLIER_2+(219705-219701+1)*BONUS_MULTIPLIER_1)
-//
-//	multi = getMultiplier(73300, 73309)
-//	fmt.Println(multi, multi == (73309-73305+1)*BONUS_MULTIPLIER_4)
-//}
-//
-//func testCase3() {
-//	fmt.Println("testCase3")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//}
-//
-//func testCase4() {
-//	fmt.Println("testCase4")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//}
-//
-//func testCase5() {
-//	fmt.Println("testCase5")
-//	// 100-73300 73301-146500 146501-219700 219701-292900
-//}
-//
-//// Return reward multiplier over the given _from to _to block.
-//func getMultiplier(_from, _to int) int {
-//	length := len(periodInfo)
-//	var (
-//		begin, end, multi, totalMulti int
-//	)
-//
-//	if _from < bonusBeginBlock {
-//		_from = bonusBeginBlock
-//	}
-//
-//	for pid := 0; pid < length; pid++ {
-//		info := periodInfo[pid]
-//		begin = info.begin
-//		end = info.end
-//		multi = info.multiplier
-//
-//		if _to <= end {
-//			if pid == 0 {
-//				return (_to-_from)*multi + totalMulti
-//			} else {
-//				if _from > begin {
-//					begin = _from
-//				}
-//				return (_to-begin)*multi + totalMulti
-//			}
-//		} else if _from >= end {
-//			continue
-//		} else {
-//			if pid == 0 {
-//				totalMulti = (end-_from)*multi + totalMulti
-//			} else {
-//				if _from > begin {
-//					begin = _from
-//				}
-//				totalMulti = (end-begin)*multi + totalMulti
-//			}
-//		}
-//	}
-//
-//	return totalMulti
-//}
+import (
+	"fmt"
+	"math/big"
+	"math/rand"
+)
+
+const (
+	// block per day
+	BLOCK_PER_DAY = 6100
+
+	// JOYS tokens mined per block.
+	JOYS_PER_BLOCK = 64
+
+	// BONUS_MULTIPLIER_8 Bonus muliplier for early joys makers.
+	BONUS_MULTIPLIER_8 = 120
+	BONUS_MULTIPLIER_4 = 60
+	BONUS_MULTIPLIER_2 = 30
+	BONUS_MULTIPLIER_1 = 15
+
+	// mined 48 days
+	MINED_DAYS = 48
+
+	// continue days per every mine stage
+	CONTINUE_DAYS_PER_STAGE = 12
+
+	bonusBeginBlock = 100
+
+	DEFAULT_WETH = 100
+)
+
+type PeriodInfo struct {
+	begin      int
+	end        int
+	multiplier int
+}
+
+var (
+	lastWETHAmount = DEFAULT_WETH
+
+	periodInfo    []PeriodInfo
+	ethCount      = 0
+	periodInfoOri []PeriodInfo
+)
+
+func init() {
+	bonusEndBlock := bonusBeginBlock + BLOCK_PER_DAY*MINED_DAYS
+
+	var (
+		multiplier   = BONUS_MULTIPLIER_8
+		currentBlock = bonusBeginBlock
+		lastBlock    = currentBlock
+	)
+	for ; currentBlock < bonusEndBlock; currentBlock += CONTINUE_DAYS_PER_STAGE * BLOCK_PER_DAY {
+		periodInfo = append(periodInfo, PeriodInfo{
+			begin:      lastBlock,
+			end:        currentBlock + CONTINUE_DAYS_PER_STAGE*BLOCK_PER_DAY,
+			multiplier: multiplier,
+		})
+
+		//lastBlock = currentBlock + CONTINUE_DAYS_PER_STAGE*BLOCK_PER_DAY + 1
+		lastBlock = currentBlock + CONTINUE_DAYS_PER_STAGE*BLOCK_PER_DAY
+		multiplier = multiplier / 2
+	}
+
+	periodInfoOri = append(periodInfoOri, periodInfo...)
+}
+
+func deposit() {
+	for i := 0; i < rand.Intn(120)+1; i++ {
+		ethCount += i
+	}
+}
+
+func getReward(_from, _to int) *big.Float {
+	totalReward := big.NewFloat(0)
+	for i := 0; i < len(periodInfo); i++ {
+		if _to <= periodInfo[i].end {
+			if i == 0 {
+				totalReward.Add(totalReward, big.NewFloat(float64((_to-_from)*periodInfo[i].multiplier)))
+				break
+			} else {
+				dest := periodInfo[i].begin
+				if _from > periodInfo[i].begin {
+					dest = _from
+				}
+				totalReward.Add(totalReward, big.NewFloat(float64((_to-dest)*periodInfo[i].multiplier)))
+				break
+			}
+		} else if _from >= periodInfo[i].end {
+			continue
+		} else {
+			totalReward.Add(totalReward, big.NewFloat(float64((periodInfo[i].end-_from)*periodInfo[i].multiplier)))
+			_from = periodInfo[i].end
+		}
+	}
+	totalReward.Mul(totalReward, big.NewFloat(1e17))
+	return totalReward
+}
+
+func updatePeriod() {
+	if lastWETHAmount >= 1000 {
+		return
+	}
+
+	if ethCount < lastWETHAmount+DEFAULT_WETH {
+		return
+	}
+	delt := (ethCount - lastWETHAmount) / DEFAULT_WETH
+
+	// update last eth amount
+	lastWETHAmount = ethCount
+
+	for i := 0; i < len(periodInfo); i++ {
+		periodInfo[i].multiplier = periodInfo[i].multiplier + delt*60
+	}
+}
+
+func main() {
+	fmt.Println(periodInfo)
+
+	for i := 0; i < 1500; i += 2 {
+		// 增加eth
+		deposit()
+
+		// first update
+		updatePeriod()
+	}
+	fmt.Println(periodInfo)
+
+	reward := func(f, t int) {
+		reward := getReward(f, t)
+		reward.Quo(reward, big.NewFloat(100000000000000000)) // div 1e17
+		fmt.Println("from:", f, " to:", t, " reward:", reward)
+	}
+
+	var (
+		v1 = 600
+		v2 = 540
+		v3 = 510
+		v4 = 495
+	)
+	from := 100
+	to := 101
+	reward(from, to)
+	fmt.Println("wright:", v1*(101-100))
+
+	from = 101
+	to = 73305
+	reward(from, to) // (480 - 101) * 0.333
+	fmt.Println("wright:", v1*(73300-101)+v2*(73305-73300))
+
+	// 下一区块
+	from = 73308
+	to = 73408
+	reward(from, to)
+	fmt.Println("wright:", (73408-73308)*v2)
+
+	from = 73308
+	to = 219608
+	reward(from, to)
+	fmt.Println("wright:", (146500-73308)*v2+(219608-146500)*v3)
+
+	from = 73308
+	to = 292808
+	reward(from, to)
+	fmt.Println("wright:", (146500-73308)*v2+(219700-146500)*v3+(292808-219700)*v4)
+}
